@@ -1,6 +1,8 @@
 ---
 title: Configuration
 weight: 2
+tags:
+  - Config
 ---
 
 Hugo reads its configuration from `hugo.yaml` in the root of your Hugo site.
@@ -228,6 +230,19 @@ params:
   dateFormat: "January 2, 2006"
 ```
 
+### Tags
+
+To display page tags, set following flags in the config file:
+
+```yaml {filename="hugo.yaml"}
+params:
+  blog:
+    list:
+      displayTags: true
+  toc:
+    displayTags: true
+```
+
 ### Page Width
 
 The width of the page can be customized by the `params.page.width` parameter in the config file:
@@ -319,3 +334,18 @@ To exclude an entire directory, use the [`cascade`](https://gohugo.io/configurat
 > To block search crawlers, you can make a [`robots.txt` template](https://gohugo.io/templates/robots/).
 > However, `robots.txt` instructions do not necessarily keep a page out of Google search results.
 
+### Open Graph
+
+To add [Open Graph](https://ogp.me/) metadata to a page, add values in the frontmatter params.
+
+As a page can have multiple `image` and `video` tags, place their values in an array.
+Other Open Graph properties can have only one value.
+For example, this page has an `og:image` tag (which configures an image to preview on social shares) and an `og:audio` tag.
+
+```yaml {filename="content/docs/guide/configuration.md"}
+title: "Configuration"
+params:
+  images:
+    - "/img/config-image.jpg"
+  audio: "config-talk.mp3"
+```

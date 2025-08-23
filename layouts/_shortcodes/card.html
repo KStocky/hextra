@@ -20,34 +20,22 @@ A shortcode to create a card.
 {{- $icon := .Get "icon" -}}
 {{- $subtitle := .Get "subtitle" -}}
 {{- $image := .Get "image" -}}
-{{- $width := 0 -}}
-{{- $height := 0 -}}
 {{- $imageStyle := .Get "imageStyle" -}}
 {{- $tag := .Get "tag" -}}
 {{- $tagColor := .Get "tagColor" | default (.Get "tagType") | default "" -}}{{- /* Compatibility with previous parameter. */ -}}
 
 {{/* Image processing options */}}
-{{- $method := .Get "method" | default "Resize" | humanize -}}
-{{- $options := .Get "options" | default "800x webp q80" -}}
-{{- $process := .Get "process" | default (printf "%s %s" $method $options) -}}
+{{- $method := .Get "method" -}}
+{{- $options := .Get "options" -}}
+{{- $process := .Get "process" -}}
 
-{{- if and $image (not (urls.Parse $image).Scheme) -}}
-  {{- with or (.Page.Resources.Get $image) (resources.Get $image) -}}
-    {{/* .Process does not work on svgs */}}
-    {{- if (not (eq .MediaType.SubType "svg")) -}}
-      {{/* Retrieve the $image resource from local or global resources */}}
-      {{- $processed := .Process $process -}}
-      {{- $width = $processed.Width -}}
-      {{- $height = $processed.Height -}}
-      {{- $image = $processed.RelPermalink -}}
-    {{- end -}}
-  {{ else }}
-    {{/* Otherwise, use relative link of the image */}}
-    {{- if hasPrefix $image "/" -}}
-      {{- $image = relURL (strings.TrimPrefix "/" $image) -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
+{{- $imageProcessing := partial "utils/process-image.html" (dict
+  "image"   $image
+  "page"    .Page
+  "method"  $method
+  "options" $options
+  "process" $process
+  ) -}}
 
 {{- partial "shortcodes/card" (dict
   "page"        .Page
@@ -55,9 +43,9 @@ A shortcode to create a card.
   "title"       $title
   "icon"        $icon
   "subtitle"    $subtitle
-  "image"       $image
-  "width"       $width
-  "height"      $height
+  "image"       $imageProcessing.image
+  "width"       $imageProcessing.width
+  "height"      $imageProcessing.height
   "imageStyle"  $imageStyle
   "tag"         $tag
   "tagType"     $tagColor

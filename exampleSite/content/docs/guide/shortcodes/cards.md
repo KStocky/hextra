@@ -17,6 +17,22 @@ linkTitle: Cards
   {{< card link="/" title="Local Image" image="images/space.jpg" subtitle="Image under assets directory, processed by Hugo." method="Resize" options="600x q80 webp" >}}
 {{< /cards >}}
 
+{{< cards >}}
+
+  {{< card-closed title="Code snippet" subtitle="C#" >}}
+  ```c#
+  Console.WriteLine("Hello, World!");
+  ```
+  {{< /card-closed >}}
+
+  {{< card-closed title="Code snippet" subtitle="C++" >}}
+  ```c++
+  std::println("Hello, World!");
+  ```
+  {{< /card-closed >}}
+
+{{< /cards >}}
+
 ## Usage
 
 ```
@@ -34,6 +50,24 @@ linkTitle: Cards
   {{</* card link="/" title="Local Image" image="images/space.jpg" subtitle="Image under assets directory, processed by Hugo." method="Resize" options="600x q80 webp" */>}}
 {{</* /cards */>}}
 ```
+
+````
+{{</* cards */>}}
+
+  {{</* card-closed title="Code snippet" subtitle="C#" */>}}
+  ```c#
+  Console.WriteLine("Hello, World!");
+  ```
+  {{</* /card-closed */>}}
+
+  {{</* card-closed title="Code snippet" subtitle="C++" */>}}
+  ```c++
+  std::println("Hello, World!");
+  ```
+  {{</* /card-closed */>}}
+
+{{</* /cards */>}}
+````
 
 ## Card Parameters
 

@@ -459,3 +459,31 @@ params:
     - "/img/config-image.jpg"
   audio: "config-talk.mp3"
 ```
+
+### Banner
+
+To add a banner to your site, add the following to your `hugo.yaml`:
+
+```yaml
+params:
+  banner:
+    key: 'announcement-xxx'
+    message: |
+      🎉 Welcome! [Hextra](https://github.com/hextra/hextra) is a static site generator that helps you build modern websites.
+```
+
+The banner will be displayed on all pages.
+
+The field `message` supports Markdown syntax.
+
+If you want to use template syntax, you can define the partial in `layouts/_partials/custom/banner.html`.
+In this case, the field `message` will be ignored.
+
+### External Link Decoration
+
+Adds an arrow icon to external links (default: false) when rendering links from Markdown.
+
+```yaml
+params:
+  externalLinkDecoration: true
+```

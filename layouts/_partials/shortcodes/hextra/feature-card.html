@@ -6,6 +6,7 @@
 {{- $style := .style -}}
 {{- $icon := .icon -}}
 {{- $link := .link -}}
+{{- $content := .content -}}
 
 {{- $external := hasPrefix $link "http" -}}
 {{- $href := cond (strings.HasPrefix $link "/") ($link | relURL) $link -}}
@@ -28,5 +29,9 @@
   </div>
   {{- with $image -}}
     <img src="{{ . }}" class="hx:absolute hx:max-w-none {{ $imageClass }}" alt="{{ $title }}" />
+  {{- end -}}
+
+  {{- with $content -}}
+    {{ $content | markdownify }}
   {{- end -}}
 </a>

@@ -52,6 +52,55 @@ A shortcode for displaying a feature grid.
 | `cols`    | The number of columns. |
 | `style`   | The style of the grid. |
 
+## `hextra/feature-card-closed`
+
+A closed shortcode for displaying a feature card with inner content.
+
+{{< hextra/feature-grid cols="2" >}}
+
+  {{< hextra/feature-card-closed title="Code snippet" subtitle="C#" >}}
+  ```c#
+  Console.WriteLine("Hello, World!");
+  ```
+  {{< /hextra/feature-card-closed >}}
+
+  {{< hextra/feature-card-closed title="Code snippet" subtitle="C++" >}}
+  ```c++
+  std::println("Hello, World!");
+  ```
+  {{< /hextra/feature-card-closed >}}
+{{< /hextra/feature-grid >}}
+
+### Usage
+
+````
+{{</* hextra/feature-grid cols="2" */>}}
+
+  {{</* hextra/feature-card-closed title="Code snippet" subtitle="C#" */>}}
+  ```c#
+  Console.WriteLine("Hello, World!");
+  ```
+  {{</* /hextra/feature-card-closed */>}}
+
+  {{</* hextra/feature-card-closed title="Code snippet" subtitle="C++" */>}}
+  ```c++
+  std::println("Hello, World!");
+  ```
+  {{</* /hextra/feature-card-closed */>}}
+{{</* /hextra/feature-grid */>}}
+````
+
+### Options
+
+| Parameter    | Description               |
+|--------------|---------------------------|
+| `title`      | The title of the card.    |
+| `subtitle`   | The subtitle of the card. |
+| `class`      | The class of the card.    |
+| `style`      | The style of the card.    |
+| `icon`       | The icon of the card.     |
+| `link`       | The link of the card.     |
+
 ## `hextra/hero-badge`
 
 A shortcode for rendering a badge with a link.

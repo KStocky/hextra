@@ -1,0 +1,30 @@
+{{- /*
+A closed shortcode for displaying a feature card with inner content.
+
+@param {string} title The title of the card.
+@param {string} subtitle The subtitle of the card.
+@param {string} class The class of the card.
+@param {string} style The style of the card.
+@param {string} icon The icon of the card.
+@param {string} link The link of the card.
+
+@example {{< hextra/feature-card title="Feature Card" subtitle="This is a feature card." >}}
+*/ -}}
+
+{{- $title := .Get "title" -}}
+{{- $subtitle := .Get "subtitle" -}}
+{{- $class := .Get "class" -}}
+{{- $style := .Get "style" -}}
+{{- $icon := .Get "icon" -}}
+{{- $link := .Get "link" -}}
+
+{{- partial "shortcodes/hextra/feature-card" (dict
+  "title"       $title
+  "subtitle"    $subtitle
+  "class"       $class
+  "style"       $style
+  "icon"        $icon
+  "link"        $link
+  "content"    .InnerDeindent
+  )
+-}}

@@ -25,7 +25,7 @@ A shortcode for displaying a feature card.
 {{/* Image processing options */}}
 {{- $method := .Get "method" -}}
 {{- $options := .Get "options" -}}
-{{- $process := .Get "process" -}}
+{{- $process := printf "%s %s" $method $options -}}
 
 {{- $imageProcessing := partial "utils/process-image.html" (dict
   "image"   $image

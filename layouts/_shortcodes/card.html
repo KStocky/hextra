@@ -29,11 +29,13 @@ A shortcode to create a card.
 {{- $options := .Get "options" -}}
 {{- $process := .Get "process" -}}
 
+{{- $method = $method | default "Resize" | humanize -}}
+{{- $options = $options | default "800x webp q80" -}}
+{{- $process = $process | default (printf "%s %s" $method $options) -}}
+
 {{- $imageProcessing := partial "utils/process-image.html" (dict
   "image"   $image
   "page"    .Page
-  "method"  $method
-  "options" $options
   "process" $process
   ) -}}
 

@@ -58,20 +58,27 @@ There are different types of menu items:
      params:
        type: search
    ```
-4. Icon
+4. Icon Only
    ```yaml
    - name: GitHub
      params:
        icon: github
    ```
-5. Theme Toggle
+5. Link with Icon
+   ```yaml
+   - name: Blog
+     params:
+       type: link
+       icon: rss
+   ```
+6. Theme Toggle
    ```yaml
     - name: Theme Toggle
       params:
         type: theme-toggle
         label: true # optional, default is false
    ```
-6. Language Switcher
+7. Language Switcher
    ```yaml
     - name: Language Switcher
       params:
@@ -422,6 +429,45 @@ To exclude an entire directory, use the [`cascade`](https://gohugo.io/configurat
 > [!NOTE]
 > To block search crawlers, you can make a [`robots.txt` template](https://gohugo.io/templates/robots/).
 > However, `robots.txt` instructions do not necessarily keep a page out of Google search results.
+
+### Umami Analytics
+
+To enable [Umami](https://umami.is/docs/), set `params.analytics.umami.serverURL` and `params.analytics.umami.websiteID` flag in `hugo.yaml`:
+
+```yaml {filename="hugo.yaml"}
+params:
+  analytics:
+    umami:
+      serverURL: "https://example.com"
+      websiteID: "94db1cb1-74f4-4a40-ad6c-962362670409"
+      # scriptName: "umami.js" # optional (default: umami.js)
+      # https://umami.is/docs/tracker-configuration#data-host-url
+      # hostURL: "http://stats.example.org" # optional
+      # https://umami.is/docs/tracker-configuration#data-auto-track
+      # autoTrack: "false" # optional
+      # https://umami.is/docs/tracker-configuration#data-tag
+      # domains: "example.net,example.org" # optional
+      # https://umami.is/docs/tracker-configuration#data-exclude-search
+      # tag: "umami-eu" # optional
+      # https://umami.is/docs/tracker-configuration#data-exclude-hash
+      # excludeSearch: "true" # optional
+      # https://umami.is/docs/tracker-configuration#data-do-not-track
+      # excludeHash: "true" # optional
+      # https://umami.is/docs/tracker-configuration#data-domains
+      # doNotTrack: "true" # optional
+```
+
+### Matomo Analytics
+
+To enable [Matomo](https://matomo.org/), set `params.analytics.matomo.URL` and `params.analytics.matomo.ID` flag in `hugo.yaml`:
+
+```yaml {filename="hugo.yaml"}
+params:
+  analytics:
+    matomo:
+      serverURL: "https://example.com"
+      websiteID: "94db1cb1-74f4-4a40-ad6c-962362670409"
+```
 
 ### LLMS.txt Support
 

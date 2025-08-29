@@ -15,6 +15,7 @@ VERSIONS=(
   #"v0.8.6:v0.8"
 )
 
+
 # Parse main version
 IFS=':' read -r MAIN_REF MAIN_NAME <<< "$MAIN_VERSION"
 

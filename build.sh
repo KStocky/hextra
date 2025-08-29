@@ -8,11 +8,11 @@ echo "Using base URL: $BASE_URL"
 
 # Version configuration - modify these arrays to specify versions to build
 # Format: "ref:display_name" (ref can be tag, branch, or commit hash, display name is what will appear in URL)
-MAIN_VERSION="v0.10.1:latest"
+MAIN_VERSION="ForkGHPages:latest"
 VERSIONS=(
-  "main:latest" # latest version always builds from main
-  "v0.9.6:v0.9"
-  "v0.8.6:v0.8"
+  #"main:latest" # latest version always builds from main
+  #"v0.9.6:v0.9"
+  #"v0.8.6:v0.8"
 )
 
 # Parse main version

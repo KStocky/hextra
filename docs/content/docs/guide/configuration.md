@@ -422,9 +422,11 @@ To exclude an entire directory, use the [`cascade`](https://gohugo.io/configurat
 
 ### Analytics
 
-Hextra has support for a number of different analytics solutions. By default, these are only enabled in production builds to prevent analytics from being tracked during development. If you do want to test analytics locally you can run a production server using:
+Hextra has support for several different analytics solutions. Hextra only supports analytics in production environments. This is to ensure that you do not accidentally send analytic events when working locally. If, however, you do want to test analytics locally, you can run a production server using:
 
-`hugo server --environment production`
+```
+hugo server --environment production
+```
 
 #### Google Analytics
 
@@ -446,7 +448,7 @@ params:
     umami:
       serverURL: "https://example.com"
       websiteID: "94db1cb1-74f4-4a40-ad6c-962362670409"
-      # scriptName: "umami.js" # optional (default: umami.js)
+      # scriptName: "script.js" # optional (default: script.js)
       # https://umami.is/docs/tracker-configuration#data-host-url
       # hostURL: "http://stats.example.org" # optional
       # https://umami.is/docs/tracker-configuration#data-auto-track
@@ -497,7 +499,7 @@ params:
       # allows data collection from local addresses. Use this with a production environment to test locally
       # allowLocal: true
 
-      # Allow data collection when a page is loaded from in a frame or iframe
+      # Allow data collection when a page is loaded in a frame or iframe
       # allowFrame: true
 ```
 

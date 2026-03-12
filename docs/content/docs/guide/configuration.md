@@ -128,6 +128,19 @@ params:
       height: 20
 ```
 
+### Pagination
+
+To disable the previous/next navigation at the bottom of docs pages or blog articles:
+
+```yaml {filename="hugo.yaml"}
+params:
+  page:
+    displayPagination: false  # for docs pages
+  blog:
+    article:
+      displayPagination: false  # for blog articles
+```
+
 ## Sidebar
 
 ### Main Sidebar
@@ -315,6 +328,8 @@ The date of the page's last modification can be displayed by enabling the `param
 
 To customize the date format, set the `params.dateFormat` parameter. Its layout matches Hugo's [`time.Format`](https://gohugo.io/functions/time/format/).
 
+Additionally, the author of the last modification can be displayed by enabling the `params.displayUpdatedAuthor` flag. This requires `enableGitInfo: true` to be set.
+
 ```yaml {filename="hugo.yaml"}
 # Parse Git commit
 enableGitInfo: true
@@ -323,6 +338,8 @@ params:
   # Display the last modification date
   displayUpdatedDate: true
   dateFormat: "January 2, 2006"
+  # Display the author of the last modification
+  displayUpdatedAuthor: true
 ```
 
 ### Tags
@@ -338,9 +355,104 @@ params:
     displayTags: true
 ```
 
+### Image Zoom
+
+Image zoom is disabled by default. When enabled, clicking a Markdown image opens a zoomed view.
+
+```yaml {filename="hugo.yaml"}
+params:
+  imageZoom:
+    enable: true
+```
+
+To disable zoom on a specific page, add this to the page front matter:
+
+```yaml {filename="content/docs/guide/configuration.md"}
+---
+imageZoom: false
+---
+```
+
+If you want to pin the Medium Zoom asset or load it from local assets:
+
+```yaml {filename="hugo.yaml"}
+params:
+  imageZoom:
+    enable: true
+    base: "https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist"
+    # js: "js/medium-zoom.min.js" # optional, relative to the base or local assets
+```
+
+### Local and Mirrored Script Assets
+
+Hextra can load optional frontend dependencies from different sources:
+
+- Theme defaults (CDN)
+- Internal mirror URLs via `base`
+- Local Hugo assets via `js` / `css`
+
+For local assets, place vendor files under your site's `assets/` directory and point config values to those asset paths:
+
+```yaml {filename="hugo.yaml"}
+params:
+  imageZoom:
+    enable: true
+    js: "js/vendor/medium-zoom.min.js"
+
+  mermaid:
+    js: "js/vendor/mermaid.min.js"
+
+  asciinema:
+    js: "js/vendor/asciinema-player.min.js"
+    css: "css/vendor/asciinema-player.css"
+
+  math:
+    engine: katex
+    katex:
+      css: "css/vendor/katex.min.css"
+      assets:
+        - "fonts/KaTeX_Main-Regular.woff2"
+        - "fonts/KaTeX_Math-Italic.woff2"
+
+  search:
+    type: flexsearch
+    flexsearch:
+      js: "js/vendor/flexsearch.bundle.min.js"
+```
+
+`imageZoom.enable: true` is only needed here because image zoom is disabled by default.
+For KaTeX, make sure to publish all font files referenced by your chosen CSS file, not just the two shown in this example.
+
+To use an internal mirror instead, set `base` (and optionally `js` / `css` when the filename differs):
+
+```yaml {filename="hugo.yaml"}
+params:
+  imageZoom:
+    base: "https://mirror.example.com/medium-zoom/dist"
+
+  mermaid:
+    base: "https://mirror.example.com/mermaid/dist"
+
+  asciinema:
+    base: "https://mirror.example.com/asciinema-player/dist/bundle"
+
+  math:
+    engine: katex
+    katex:
+      base: "https://mirror.example.com/katex/dist"
+
+  search:
+    flexsearch:
+      base: "https://mirror.example.com/flexsearch/dist"
+      # js: "flexsearch.bundle.min.js"
+```
+
+> [!NOTE]
+> To customize MathJax source loading, override `layouts/_partials/scripts/mathjax.html` in your site.
+
 ### Page Width
 
-The width of the page can be customized by the `params.page.width` parameter in the config file:
+The layout shell width can be customized by the `params.page.width` parameter in the config file:
 
 ```yaml {filename="hugo.yaml"}
 params:
@@ -349,9 +461,77 @@ params:
     width: wide
 ```
 
-There are three available options: `full`, `wide`, and `normal`. By default, the page width is set to `normal`.
+Available options for `params.page.width`: `full`, `wide`, `normal`.
+
+The main reading content width remains fixed at `72rem` by default.
+
+To customize content width, override the CSS variable in your custom stylesheet:
+
+```css {filename="assets/css/custom.css"}
+:root {
+  --hextra-max-content-width: 100%;
+}
+```
 
 Similarly, the width of the navbar and footer can be customized by the `params.navbar.width` and `params.footer.width` parameters.
+
+### Page Context Menu
+
+The page context menu provides a dropdown button that allows users to copy the page content as Markdown or view the raw Markdown source. This feature is useful for documentation sites where readers may want to share or reference the content in Markdown format.
+
+#### Enabling the Context Menu
+
+To enable the context menu globally, add the following to your config file:
+
+```yaml {filename="hugo.yaml"}
+params:
+  page:
+    contextMenu:
+      enable: true
+```
+
+You also need to enable the `markdown` output format for pages:
+
+```yaml {filename="hugo.yaml"}
+outputs:
+  page: [html, markdown]
+  section: [html, rss, markdown]
+```
+
+#### Per-Page Control
+
+To enable or disable the context menu for a specific page, use the `contextMenu` parameter in the front matter:
+
+```yaml {filename="content/docs/example.md"}
+---
+title: Example Page
+contextMenu: false
+---
+```
+
+#### Custom Links
+
+You can add custom links to the context menu dropdown. This is useful for integrating with external services. The links support the following placeholders:
+
+- `{url}` - The page URL (URL-encoded)
+- `{title}` - The page title (URL-encoded)
+- `{markdown_url}` - The URL to the raw Markdown content (URL-encoded)
+
+```yaml {filename="hugo.yaml"}
+params:
+  page:
+    contextMenu:
+      enable: true
+      links:
+        - name: Open in ChatGPT
+          icon: chatgpt
+          url: "https://chatgpt.com/?hints=search&q=I%27m+looking+at+this+documentation%3A+{url}%0AHelp+me+understand+how+to+use+it."
+```
+
+Each link can have:
+- `name` - The display text for the link
+- `icon` - An optional icon name (see [Icons]({{% relref "docs/guide/shortcodes/icon" %}}))
+- `url` - The URL with optional placeholders
 
 ### FlexSearch Index
 
@@ -368,6 +548,17 @@ params:
     flexsearch:
       # index page by: content | summary | heading | title
       index: content
+```
+
+You can also control where the FlexSearch runtime is loaded from:
+
+```yaml {filename="hugo.yaml"}
+params:
+  search:
+    flexsearch:
+      version: "0.8.143" # default CDN version
+      # base: "https://mirror.example.com/flexsearch/dist" # optional remote base URL
+      # js: "js/vendor/flexsearch.bundle.min.js" # local asset path, or custom file under remote base
 ```
 
 Options for `flexsearch.index`:
@@ -522,6 +713,15 @@ This will generate an `llms.txt` file at your site's root containing:
 - Page summaries and publication dates
 - Direct links to all content
 
+You can exclude specific pages or sections by setting `llms: false` in their front matter:
+
+```yaml
+---
+title: "Internal Notes"
+llms: false
+---
+```
+
 The llms.txt file is automatically generated from your content structure and makes your site more accessible to AI tools and language models for context and reference.
 
 ### Open Graph
@@ -533,15 +733,15 @@ To add [Open Graph](https://ogp.me/) metadata, you can:
 As a page can have multiple `image` and `video` tags, place their values in an array.
 Other Open Graph properties can have only one value.
 
-{{< tabs items="Page Level, Global Level" >}}
-{{< tab >}}
+{{< tabs >}}
+{{< tab name="Page Level" >}}
 
 ```md {filename="mypage.md"}
 ---
 title: "My Page"
 params:
   images:
-    - "/images/image01.jpg"
+    - "images/image01.jpg"
   audio: "podcast02.mp3"
   videos:
     - "video01.mp4"
@@ -550,11 +750,11 @@ params:
 Page content.
 ```
 {{< /tab >}}
-{{< tab >}}
+{{< tab name="Global Level" >}}
 ```yaml {filename="hugo.yaml"}
 params:
   images:
-    - "/images/image01.jpg"
+    - "images/image01.jpg"
   audio: "podcast02.mp3"
   videos:
     - "video01.mp4"

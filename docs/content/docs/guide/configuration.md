@@ -73,18 +73,18 @@ There are different types of menu items:
    ```
 6. Theme Toggle
    ```yaml
-    - name: Theme Toggle
-      params:
-        type: theme-toggle
-        label: true # optional, default is false
+   - name: Theme Toggle
+     params:
+       type: theme-toggle
+       label: true # optional, default is false
    ```
 7. Language Switcher
    ```yaml
-    - name: Language Switcher
-      params:
-        type: language-switch
-        label: true # optional, default is false
-        icon: "globe-alt" # optional, default is "translate"
+   - name: Language Switcher
+     params:
+       type: language-switch
+       label: true # optional, default is false
+       icon: "globe-alt" # optional, default is "translate"
    ```
 
 These menu items can be sorted by setting the `weight` parameter.
@@ -135,10 +135,10 @@ To disable the previous/next navigation at the bottom of docs pages or blog arti
 ```yaml {filename="hugo.yaml"}
 params:
   page:
-    displayPagination: false  # for docs pages
+    displayPagination: false # for docs pages
   blog:
     article:
-      displayPagination: false  # for blog articles
+      displayPagination: false # for blog articles
 ```
 
 ## Sidebar
@@ -190,7 +190,6 @@ sidebar:
 ```
 
 This will hide the main sidebar from the page, freeing up space for the main content of the page.
-
 
 ## Right Sidebar
 
@@ -355,6 +354,16 @@ params:
     displayTags: true
 ```
 
+Hugo creates taxonomy pages for `tags` and `categories` by default. If your site does not use taxonomy pages and you want to omit the generated `public/tags/` and `public/categories/` directories, disable the `taxonomy` and `term` page kinds:
+
+```yaml {filename="hugo.yaml"}
+disableKinds:
+  - taxonomy
+  - term
+```
+
+Only disable these kinds when you are not relying on tag or category archive pages.
+
 ### Image Zoom
 
 Image zoom is disabled by default. When enabled, clicking a Markdown image opens a zoomed view.
@@ -406,6 +415,11 @@ params:
     js: "js/vendor/asciinema-player.min.js"
     css: "css/vendor/asciinema-player.css"
 
+  gallery:
+    js: "js/vendor/photoswipe.esm.min.js"
+    lightboxJs: "js/vendor/photoswipe-lightbox.esm.min.js"
+    css: "css/vendor/photoswipe.css"
+
   math:
     engine: katex
     katex:
@@ -435,6 +449,9 @@ params:
 
   asciinema:
     base: "https://mirror.example.com/asciinema-player/dist/bundle"
+
+  gallery:
+    base: "https://mirror.example.com/photoswipe/dist"
 
   math:
     engine: katex
@@ -529,6 +546,7 @@ params:
 ```
 
 Each link can have:
+
 - `name` - The display text for the link
 - `icon` - An optional icon name (see [Icons]({{% relref "docs/guide/shortcodes/icon" %}}))
 - `url` - The URL with optional placeholders
@@ -683,7 +701,7 @@ params:
       #------------------
       # disables automatic collection of data
       # noOnload: true
-      
+
       # disables event binding. See more here https://www.goatcounter.com/help/events
       # noEvents: true
 
@@ -727,6 +745,7 @@ The llms.txt file is automatically generated from your content structure and mak
 ### Open Graph
 
 To add [Open Graph](https://ogp.me/) metadata, you can:
+
 - add values in the front-matter params of a page
 - or add values in the Hugo configuration file
 
@@ -749,8 +768,10 @@ params:
 
 Page content.
 ```
+
 {{< /tab >}}
 {{< tab name="Global Level" >}}
+
 ```yaml {filename="hugo.yaml"}
 params:
   images:
@@ -759,6 +780,7 @@ params:
   videos:
     - "video01.mp4"
 ```
+
 {{< /tab >}}
 {{< /tabs >}}
 
@@ -769,7 +791,7 @@ To add a banner to your site, add the following to your `hugo.yaml`:
 ```yaml
 params:
   banner:
-    key: 'announcement-xxx'
+    key: "announcement-xxx"
     message: |
       🎉 Welcome! [Hextra](https://github.com/hextra/hextra) is a static site generator that helps you build modern websites.
 ```
